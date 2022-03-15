@@ -5,8 +5,9 @@
 
 var scheduledEvent = getLocal();
 var today = moment();
+// sets time
 $('#current').text(today.format("MMM Do, YYYY"));
-
+// saves to local storage
 $('.container').on('click', '.saveBttn', function () {
     getLocal();
     buttonIndex = $(this).index('.saveBttn')
@@ -22,7 +23,7 @@ function addToLocal() {
     localStorage.setItem("appointment", textString);
 }
 
-
+// Grabs saved storage and or over-writes it
 function getLocal() {
     var pullLocal = localStorage.getItem("appointment");
     if (pullLocal === null) {
@@ -39,14 +40,17 @@ function handleFormSubmit(event) {
     event.preventDefault();
 }
 $('.container').children().find('#textarea').each((i, e) => $(e).val(scheduledEvent[i].value))
-
+// Changes color depending on the time
 $('.container').children().each((i, e) => {
     var liveTime = moment().format('H');
     if ((i + 9) < liveTime) {
+        // past
         $(e).css("background-color", "red")
     } else if ((i + 9) > liveTime) {
+        // future
         $(e).css("background-color", "green")
     } else {
+    // present
         ((i + 9) == liveTime)
         $(e).css("background-color", "yellow")
     }
